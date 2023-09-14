@@ -3,6 +3,7 @@
 *.dll
 *.so
 *.dylib
+gokan
 
 # test binary
 *.test
