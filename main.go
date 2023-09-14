@@ -17,7 +17,14 @@ const (
 	todo status = iota
 	inProgress
 	done
-) 
+)
+
+/* STYLING */
+var (
+	columnStyle = lipgloss.NewStyle().Padding(1, 2)
+	focusedStyle = lipgloss.NewStyle().Padding(1, 2).Border(lipgloss.RoundedBorder()).BorderForeground(lipgloss.Color("62"))
+	helpStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("241"))
+)
 
 /* CUSTOM ITEM */
 type Task struct {
@@ -96,7 +103,11 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 func (m Model) View() string {
 	if m.loaded {
-		return lipgloss.JoinHorizontal(lipgloss.Left, m.lists[todo].View(), m.lists[inProgress].View(), m.lists[done].View())
+		todoView := m.lists[todo].View()
+		inProgView := m.lists[inProgress].View()
+		doneView := m.lists[done].View()
+
+		return lipgloss.JoinHorizontal(lipgloss.Left, todoView, inProgView, doneView)
 	} else {
 		return "loading..."
 	}
