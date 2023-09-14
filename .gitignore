@@ -1,0 +1,16 @@
+# binaries
+*.exe
+*.dll
+*.so
+*.dylib
+
+# test binary
+*.test
+
+# coverage
+*.out
+
+# misc
+.vscode
+DS_Store
+debug.log
