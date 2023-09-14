@@ -1,6 +1,9 @@
 package main
 
-import "github.com/charmbracelet/bubbles/list"
+import (
+	"github.com/charmbracelet/bubbles/list"
+	tea "github.com/charmbracelet/bubbletea"
+)
 
 type status int
 
@@ -45,4 +48,24 @@ func (m *Model) initList(width, height int) {
 		Task{status: todo, title: "eat sushi", description: "negitoro roll, miso soup, something else"},
 		Task{status: todo, title: "fold laundry", description: "or wear wrinkly t-shirts lol"},
 	})
+}
+
+func (m Model) Init() tea.Cmd {
+	return nil
+}
+
+func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+	switch msg := msg.(type) {
+		case tea.WindowSizeMsg:
+			m.initList(msg.Width, msg.Height)
+	}
+
+	var cmd tea.Cmd
+	m.list, cmd = m.list.Update(msg)
+
+	return m, cmd 
+}
+
+func (m Model) View() string {
+	return m.list.View()
 }
