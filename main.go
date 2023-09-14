@@ -1,6 +1,9 @@
 package main
 
 import (
+	"fmt"
+	"os"
+
 	"github.com/charmbracelet/bubbles/list"
 	tea "github.com/charmbracelet/bubbletea"
 )
@@ -39,7 +42,10 @@ type Model struct {
 	err error
 }
 
-// TODO: call this on tea.WindowSizeMsg
+func New() *Model {
+	return &Model{}
+}
+
 func (m *Model) initList(width, height int) {
 	m.list = list.New([]list.Item{}, list.NewDefaultDelegate(), width, height)
 	m.list.Title = "To Do"
@@ -68,4 +74,14 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 func (m Model) View() string {
 	return m.list.View()
+}
+
+func main() {
+	m := New()
+	p := tea.NewProgram(m)
+
+	if err := p.Start(); err != nil {
+		fmt.Println(err)
+		os.Exit(1);
+	}
 }
